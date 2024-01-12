@@ -72,7 +72,10 @@ namespace Exercise1_Solution
             //Console.WriteLine(islands.beachLength(kingdom));
 
 
-
+            Mailbox mailbox = new Mailbox();
+            String collection = "ABCDAAST";
+            String[] address = { "111 A ST", "A BAD ST", "B BAD ST" };
+            Console.WriteLine(mailbox.impossible(collection, address));
         }
     }
 
@@ -547,6 +550,52 @@ namespace Exercise1_Solution
 
                 }
             }
+            return ans;
+        }
+    }
+    #endregion
+
+    #region Mailbox Problem-11
+    class Mailbox
+    {
+        public int impossible(String collection, String[] address)
+        {
+            int ans = 0;
+            Dictionary<char, int> collectionCount = new Dictionary<char, int>();
+
+            foreach (char ch in collection)
+            {
+                if (collectionCount.Keys.Contains(ch))
+                    collectionCount[ch]++;
+                else
+                    collectionCount[ch] = 1;
+            }
+
+            foreach (String s in address)
+            {
+                
+                Dictionary<char, int> currentCount = new Dictionary<char, int>();
+                foreach (char ch in s)
+                {
+                    if(ch == ' ')
+                        continue;
+
+                    if (currentCount.Keys.Contains(ch))
+                        currentCount[ch]++;
+                    else
+                        currentCount[ch] = 1;
+                }
+
+                foreach (char ch in currentCount.Keys)
+                {
+                    if (!(collectionCount.ContainsKey(ch) && collectionCount[ch] >= currentCount[ch]))
+                    {
+                        ans++;
+                        break;
+                    }
+                }
+            }
+
             return ans;
         }
     }
