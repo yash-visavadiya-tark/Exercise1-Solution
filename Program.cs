@@ -78,11 +78,17 @@ namespace Exercise1_Solution
             //Console.WriteLine(mailbox.impossible(collection, address));
 
 
-            MysticAndCandiesEasy mysticAndCandiesEasy = new MysticAndCandiesEasy();
-            int C = 326;
-            int X = 109;
-            int[] high = {9, 13, 6, 6, 6, 16, 16, 16, 10, 16, 4, 3, 10, 8, 11, 17, 12, 5, 7,8, 7, 4, 15, 7, 14, 2, 2, 1, 17, 1, 7, 7, 12, 17, 2, 9, 7, 1, 8, 16,7, 4, 16, 2, 13, 3, 13, 1, 17, 6};
-            Console.WriteLine(mysticAndCandiesEasy.minBoxes(C, X, high));
+            //MysticAndCandiesEasy mysticAndCandiesEasy = new MysticAndCandiesEasy();
+            //int C = 326;
+            //int X = 109;
+            //int[] high = {9, 13, 6, 6, 6, 16, 16, 16, 10, 16, 4, 3, 10, 8, 11, 17, 12, 5, 7,8, 7, 4, 15, 7, 14, 2, 2, 1, 17, 1, 7, 7, 12, 17, 2, 9, 7, 1, 8, 16,7, 4, 16, 2, 13, 3, 13, 1, 17, 6};
+            //Console.WriteLine(mysticAndCandiesEasy.minBoxes(C, X, high));
+
+
+            PrintScheduler printScheduler = new PrintScheduler();
+            String[] threads = { "A" };
+            String[] slices = { "0 1" };
+            Console.WriteLine(printScheduler.getOutput(threads, slices));
         }
     }
 
@@ -639,6 +645,40 @@ namespace Exercise1_Solution
                 s += n;
             }
 
+            return ans;
+        }
+    }
+    #endregion
+
+    #region PrintScheduler Problem-13
+    class PrintScheduler
+    {
+        public String getOutput(String[] threads, String[] slices)
+        {
+            String ans = "";
+            Dictionary<int, int> mapInd = new Dictionary<int, int>();
+            int i;
+            for (i = 0; i < threads.Length; i++)
+            {
+                mapInd[i] = 0;
+            }
+
+            for(i = 0; i < slices.Length; i++)
+            {
+                String[] slice = slices[i].Split(' ');
+                int ind = Int32.Parse(slice[0]);
+                int time = Int32.Parse(slice[1]);
+                while (time > 0)
+                {
+                    ans += threads[ind][mapInd[ind]];
+                    mapInd[ind] ++;
+                    time--;
+                    if (mapInd[ind] == threads[ind].Length)
+                    {
+                        mapInd[ind] = 0;
+                    }
+                }
+            }
             return ans;
         }
     }
