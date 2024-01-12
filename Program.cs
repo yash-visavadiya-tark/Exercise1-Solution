@@ -1,10 +1,344 @@
-﻿namespace Exercise1_Solution
+﻿using System.Collections;
+using System.Runtime.InteropServices.Marshalling;
+using System.Runtime.Intrinsics.X86;
+using System.Text;
+
+namespace Exercise1_Solution
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            //HuffmanDecoding huffmanDecoding = new HuffmanDecoding();
+
+            //String archive = "001101100101100110111101011001011001010";
+            //String[] dictionary = { "110", "011", "10", "0011", "00011", "111", "00010", "0010", "010", "0000" };
+
+            //Console.WriteLine(huffmanDecoding.decode(archive, dictionary));
+
+
+            //LexmaxReplace lexmaxReplace = new LexmaxReplace();
+
+            //String s = "xldyzmsrrwzwaofkcxwehgvtrsximxgdqrhjthkgfucrjdvwlr";
+            //String t = "xfpidmmilhdfzypbguentqcojivertdhshstkcysydgcwuwhlk";
+
+            //Console.WriteLine(lexmaxReplace.get(s, t));
+
+
+            //SortingSubsets sortingSubsets = new SortingSubsets();
+            //int[] a = { 11, 11, 49, 7, 11, 11, 7, 7, 11, 49, 11 };
+            //Console.WriteLine(sortingSubsets.getMinimalSize(a));
+
+
+            //PalindromeDecoding palindromeDecoding = new PalindromeDecoding();
+            //String code = "TC206";
+            //int[] position = { 1, 2, 5 };
+            //int[] length = { 1, 1, 1 };
+            //Console.WriteLine(palindromeDecoding.decode(code, position, length));
+
+
+            //MovingAvg movingAvg = new MovingAvg();
+            //int k = 3;
+            //double[] data = { 6, 2.5, 3.5 };
+            //Console.WriteLine(movingAvg.difference(k, data));
+
+
+            //WordCompositionGame wordCompositionGame = new WordCompositionGame();
+            //String[] listA = { "bcdbb", "aaccd", "dacbc", "bcbda", "cdedc", "bbaaa", "aecae" };
+            //String[] listB = { "bcdbb", "ddacb", "aaccd", "adcab", "edbee", "aecae", "bcbda" };
+            //String[] listC = { "dcaab", "aadbe", "bbaaa", "ebeec", "eaecb", "bcbba", "aecae", "adcab", "bcbda" };
+            //Console.WriteLine(wordCompositionGame.score(listA, listB, listC));
+
+
+            //LargestSubsequence largestSubsequence   = new LargestSubsequence();
+            //String s = "aquickbrownfoxjumpsoverthelazydog";
+            //Console.WriteLine(largestSubsequence.getLargest(s));
+
+
+            //MaximumBalances maximumBalances = new MaximumBalances();
+            //String s = "))()()))(()";
+            //Console.WriteLine(maximumBalances.solve(s));
+
+
         }
     }
+
+    #region HuffmanDecoding Problem-1
+    class HuffmanDecoding
+    {
+        public String decode(String archive, string[] dictionary)
+        {
+            int i = 0;
+            int s1 = archive.Length;
+            int s2 = dictionary.Length;
+
+            String ans = "";
+            while (i < s1)
+            {
+                for (int j = 0; j < s2; j++)
+                {
+                    int len = dictionary[j].Length;
+                    bool flag = true;
+
+                    if (i >= s1) {
+                        break;
+                    }
+                    for (int k = i; k < i + len; k++)
+                    {
+                        if (archive[k] != dictionary[j][k - i])
+                        {
+                            flag = false;
+                            break;
+                        }
+                    }
+                    if (flag)
+                    {
+                        ans += (char)(j + 65);
+                        i += len;
+
+                    }
+                }
+            }
+            return ans;
+        }
+    }
+    #endregion
+
+    #region LexmaxReplace Problem-2
+    class LexmaxReplace
+    {
+        public String get(String s, String t)
+        {
+            String ans = "";
+            char[] arr = t.ToCharArray();
+            Array.Sort(arr, new Comparison<char>((c1, c2) => c2.CompareTo(c1)));
+
+            t = new String(arr);
+
+            int i = 0, j = 0;
+            while (i < s.Length && j < t.Length)
+            {
+                if (s[i] > t[j])
+                {
+                    ans += s[i];
+                    i++;
+                }
+                else
+                {
+                    ans += t[j];
+                    i++;
+                    j++;
+                }
+            }
+            while (i < s.Length)
+            {
+                ans += s[i];
+            }
+
+            return ans;
+        }
+    }
+    #endregion
+
+    #region SortingSubsets Problem-3
+    class SortingSubsets
+    {
+        public int getMinimalSize(int[] a)
+        {
+            int ans = 0;
+            int[] arr = new int[a.Length];
+            a.CopyTo(arr, 0);
+            Array.Sort(a);
+
+            for (int i = 0; i < a.Length; i++)
+            {
+                if (a[i] != arr[i])
+                {
+                    ans += 1;
+                }
+            }
+            return ans;
+        }
+    }
+    #endregion
+
+    #region PalindromeDecoding Problem-4
+    class PalindromeDecoding
+    {
+        public String decode(String code, int[] position, int[] length)
+        {
+            StringBuilder ans = new StringBuilder(code);
+
+            for (int i = 0; i < position.Length; i++)
+            {
+                StringBuilder palindrome = new StringBuilder("");
+                for (int j = position[i]; j < position[i] + length[i]; j++)
+                {
+                    palindrome.Append(ans[j]);
+                }
+
+                for (int j = 0; j < palindrome.Length / 2; j++)
+                {
+                    char copy = palindrome[j];
+                    palindrome[j] = palindrome[palindrome.Length - 1 - j];
+                    palindrome[palindrome.Length - 1 - j] = copy;
+                }
+
+                ans.Insert(position[i] + length[i], palindrome.ToString());
+
+            }
+            return ans.ToString();
+        }
+    }
+    #endregion
+
+    #region MovingAvg Problem-5
+    class MovingAvg{
+        public double difference(int k, double[] data)
+        {
+            double maxi = 0;
+            double mini = 0;
+
+            double sum = 0;
+            for (int i = 0; i < k; i++)
+            {
+                sum += data[i];
+            }
+
+            maxi = sum / k;
+            mini = sum / k;
+
+            for(int i = k; i < data.Length; i++)
+            {
+                sum += data[i] - data[i - k];
+
+                maxi = Math.Max(maxi, sum / k);
+                mini = Math.Min(mini, sum / k);
+            }
+
+            return maxi - mini;
+        }
+    }
+    #endregion
+
+    #region WordCompositionGame Problem-6
+    class WordCompositionGame
+    {
+        public String score(String[] listA, String[] listB, String[] listC)
+        {
+            int scoreA = 0;
+            int scoreB = 0;
+            int scoreC = 0;
+
+            for(int i = 0; i < listA.Length; i++)
+            {
+                int cnt = 3;
+                if (listB.Contains(listA[i]))
+                {
+                    cnt--;
+                }
+                if (listC.Contains(listA[i]))
+                {
+                    cnt--;
+                }
+
+                scoreA += cnt;
+            }
+
+            for (int i = 0; i < listB.Length; i++)
+            {
+                int cnt = 3;
+                if (listA.Contains(listB[i]))
+                {
+                    cnt--;
+                }
+                if (listC.Contains(listB[i]))
+                {
+                    cnt--;
+                }
+
+                scoreB += cnt;
+            }
+
+            for (int i = 0; i < listC.Length; i++)
+            {
+                int cnt = 3;
+                if (listA.Contains(listC[i]))
+                {
+                    cnt--;
+                }
+                if (listB.Contains(listC[i]))
+                {
+                    cnt--;
+                }
+
+                scoreC += cnt;
+            }
+            return scoreA + "/" + scoreB + "/" + scoreC;
+        }
+    }
+    #endregion
+
+    #region LargestSubsequence Problem-7
+    class LargestSubsequence
+    {
+        public String getLargest(String s)
+        {
+            string ans = "";
+            int n = s.Length;
+            Stack<char> st = new Stack<char>();
+
+            int i = 0;
+            while (i < n)
+            {
+                while(st.Count > 0 && st.Peek().CompareTo(s[i]) < 0)
+                {
+                    st.Pop();
+                }
+                st.Push(s[i]);
+                i++;
+            }
+            
+            while(st.Count > 0)
+            {
+                ans += st.Pop();
+            }
+            
+            return new string(ans.Reverse().ToArray());
+        }
+    }
+    #endregion
+
+    #region MaximumBalances Problem-8
+    class MaximumBalances
+    {
+        public int solve(String s)
+        {
+            int ans = 0;
+            int openingBracketCount = 0;
+            int closingBracketCount = 0;
+
+            foreach (char c in s)
+            {
+                if ( c == '(')
+                    openingBracketCount++;
+                else
+                    closingBracketCount++;
+            }
+
+            ans = Math.Min(openingBracketCount, closingBracketCount);
+            return ans * (ans + 1) / 2;
+        }
+    }
+    #endregion
+
+    #region DukeOnChessBoard Problem-9
+    class DukeOnChessBoard
+    {
+        public String dukePath(int n, String initPosition)
+        {
+            return "";
+        }
+    }
+    #endregion
 }
