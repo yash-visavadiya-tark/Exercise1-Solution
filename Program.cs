@@ -61,10 +61,17 @@ namespace Exercise1_Solution
             //Console.WriteLine(maximumBalances.solve(s));
 
 
-            DukeOnChessBoard dukeOnChessBoard = new DukeOnChessBoard();
-            int n = 4;
-            String initPosition = "d3";
-            Console.WriteLine(dukeOnChessBoard.dukePath(n, initPosition));
+            //DukeOnChessBoard dukeOnChessBoard = new DukeOnChessBoard();
+            //int n = 4;
+            //String initPosition = "d3";
+            //Console.WriteLine(dukeOnChessBoard.dukePath(n, initPosition));
+
+
+            //Islands islands = new Islands();
+            //String[] kingdom = { "....#.", ".#....", "..#..#", "####.." };
+            //Console.WriteLine(islands.beachLength(kingdom));
+
+
 
         }
     }
@@ -86,7 +93,8 @@ namespace Exercise1_Solution
                     int len = dictionary[j].Length;
                     bool flag = true;
 
-                    if (i >= s1) {
+                    if (i >= s1)
+                    {
                         break;
                     }
                     for (int k = i; k < i + len; k++)
@@ -199,7 +207,8 @@ namespace Exercise1_Solution
     #endregion
 
     #region MovingAvg Problem-5
-    class MovingAvg{
+    class MovingAvg
+    {
         public double difference(int k, double[] data)
         {
             double maxi = 0;
@@ -214,7 +223,7 @@ namespace Exercise1_Solution
             maxi = sum / k;
             mini = sum / k;
 
-            for(int i = k; i < data.Length; i++)
+            for (int i = k; i < data.Length; i++)
             {
                 sum += data[i] - data[i - k];
 
@@ -236,7 +245,7 @@ namespace Exercise1_Solution
             int scoreB = 0;
             int scoreC = 0;
 
-            for(int i = 0; i < listA.Length; i++)
+            for (int i = 0; i < listA.Length; i++)
             {
                 int cnt = 3;
                 if (listB.Contains(listA[i]))
@@ -297,19 +306,19 @@ namespace Exercise1_Solution
             int i = 0;
             while (i < n)
             {
-                while(st.Count > 0 && st.Peek().CompareTo(s[i]) < 0)
+                while (st.Count > 0 && st.Peek().CompareTo(s[i]) < 0)
                 {
                     st.Pop();
                 }
                 st.Push(s[i]);
                 i++;
             }
-            
-            while(st.Count > 0)
+
+            while (st.Count > 0)
             {
                 ans += st.Pop();
             }
-            
+
             return new string(ans.Reverse().ToArray());
         }
     }
@@ -326,7 +335,7 @@ namespace Exercise1_Solution
 
             foreach (char c in s)
             {
-                if ( c == '(')
+                if (c == '(')
                     openingBracketCount++;
                 else
                     closingBracketCount++;
@@ -345,22 +354,22 @@ namespace Exercise1_Solution
         {
             bool[,] grid = new bool[n, n];
             int i, j;
-            for(i = 0; i < n; i++)
+            for (i = 0; i < n; i++)
             {
-                for(j = 0; j < n; j++)
+                for (j = 0; j < n; j++)
                 {
                     grid[i, j] = false;
                 }
-            }            
-            
+            }
+
             Dictionary<int, int> row = new Dictionary<int, int>();
-            for(i = 0; i < n; i++)
+            for (i = 0; i < n; i++)
             {
                 row[i] = (n - i);
             }
 
             Dictionary<int, char> col = new Dictionary<int, char>();
-            for(i = 0; i < n; i++)
+            for (i = 0; i < n; i++)
             {
                 col[i] = (char)(i + 97);
             }
@@ -396,7 +405,7 @@ namespace Exercise1_Solution
             while (last.Count > 0)
             {
                 string curr = last.Dequeue();
-                if(last.Count == 0)
+                if (last.Count == 0)
                 {
                     curr = curr.Substring(0, 2);
                 }
@@ -405,9 +414,9 @@ namespace Exercise1_Solution
             return String.Join("", ans);
         }
 
-        public void dfs(int i, int j,int n, Queue<String> first, Queue<String> last, bool[,] grid, Dictionary<int, int> row, Dictionary<int, char> col)
+        public void dfs(int i, int j, int n, Queue<String> first, Queue<String> last, bool[,] grid, Dictionary<int, int> row, Dictionary<int, char> col)
         {
-            if(j + 1 < n && !grid[i, j + 1])
+            if (j + 1 < n && !grid[i, j + 1])
             {
                 j++;
                 // Add To Queue
@@ -426,7 +435,7 @@ namespace Exercise1_Solution
                 grid[i, j] = true;
             }
 
-            else if(i - 1 >= 0 && !grid[i - 1, j])
+            else if (i - 1 >= 0 && !grid[i - 1, j])
             {
                 i--;
                 // Add To Queue
@@ -465,8 +474,8 @@ namespace Exercise1_Solution
                 grid[i, j] = true;
                 dfs(i, j, n, first, last, grid, row, col);
             }
-            
-            else if(j - 1 >= 0 && !grid[i, j - 1])
+
+            else if (j - 1 >= 0 && !grid[i, j - 1])
             {
                 j--;
                 // Add To Queue
@@ -484,13 +493,61 @@ namespace Exercise1_Solution
                 }
                 grid[i, j] = true;
             }
-            
+
             else
             {
                 return;
             }
-           
+
             dfs(i, j, n, first, last, grid, row, col);
+        }
+    }
+    #endregion
+
+    #region Islands Problem-10
+    class Islands
+    {
+        public int beachLength(String[] kingdom)
+        {
+            int ans = 0;
+            int n = kingdom.Length;
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < kingdom[i].Length; j++)
+                {
+                    int prev = ans;
+                    if (kingdom[i][j] == '#')
+                    {
+                        if (j - 1 >= 0 && kingdom[i][j - 1] == '.')
+                            ans++;
+                        if (j + 1 < kingdom[i].Length && kingdom[i][j + 1] == '.')
+                            ans++;
+
+
+                        if (i - 1 >= 0 && j < kingdom[i - 1].Length && kingdom[i - 1][j] == '.')
+                            ans++;
+                        if (i + 1 < n && j < kingdom[i + 1].Length && kingdom[i + 1][j] == '.')
+                            ans++;
+
+                        if (i % 2 == 0)
+                        {
+                            if (i - 1 >= 0 && j - 1 >= 0 && kingdom[i - 1][j - 1] == '.')
+                                ans++;
+                            if (i + 1 < n && j - 1 >= 0 && kingdom[i + 1][j - 1] == '.')
+                                ans++;
+                        }
+                        else
+                        {
+                            if (i - 1 >= 0 && j + 1 < kingdom[i - 1].Length && kingdom[i - 1][j + 1] == '.')
+                                ans++;
+                            if (i + 1 < n && j + 1 < kingdom[i + 1].Length && kingdom[i + 1][j + 1] == '.')
+                                ans++;
+                        }
+                    }
+
+                }
+            }
+            return ans;
         }
     }
     #endregion
