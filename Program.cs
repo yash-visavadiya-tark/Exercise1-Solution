@@ -72,10 +72,17 @@ namespace Exercise1_Solution
             //Console.WriteLine(islands.beachLength(kingdom));
 
 
-            Mailbox mailbox = new Mailbox();
-            String collection = "ABCDAAST";
-            String[] address = { "111 A ST", "A BAD ST", "B BAD ST" };
-            Console.WriteLine(mailbox.impossible(collection, address));
+            //Mailbox mailbox = new Mailbox();
+            //String collection = "ABCDAAST";
+            //String[] address = { "111 A ST", "A BAD ST", "B BAD ST" };
+            //Console.WriteLine(mailbox.impossible(collection, address));
+
+
+            MysticAndCandiesEasy mysticAndCandiesEasy = new MysticAndCandiesEasy();
+            int C = 326;
+            int X = 109;
+            int[] high = {9, 13, 6, 6, 6, 16, 16, 16, 10, 16, 4, 3, 10, 8, 11, 17, 12, 5, 7,8, 7, 4, 15, 7, 14, 2, 2, 1, 17, 1, 7, 7, 12, 17, 2, 9, 7, 1, 8, 16,7, 4, 16, 2, 13, 3, 13, 1, 17, 6};
+            Console.WriteLine(mysticAndCandiesEasy.minBoxes(C, X, high));
         }
     }
 
@@ -573,11 +580,11 @@ namespace Exercise1_Solution
 
             foreach (String s in address)
             {
-                
+
                 Dictionary<char, int> currentCount = new Dictionary<char, int>();
                 foreach (char ch in s)
                 {
-                    if(ch == ' ')
+                    if (ch == ' ')
                         continue;
 
                     if (currentCount.Keys.Contains(ch))
@@ -594,6 +601,42 @@ namespace Exercise1_Solution
                         break;
                     }
                 }
+            }
+
+            return ans;
+        }
+    }
+    #endregion
+
+    #region MysticAndCandiesEasy Problem-12
+    class MysticAndCandiesEasy
+    {
+        public int minBoxes(int C, int X, int[] high)
+        {
+            int[] arr = high.OrderByDescending(c => c).ToArray();
+
+            int ans = 0;
+            int s = 0;
+
+            for (int i = arr.Length - 1; i >= 0; i--)
+            {
+                s += arr[i];
+                if (C - s <= 0)
+                {
+                    s -= arr[i];
+                    arr[i] = C - s;
+                    s += C - s;
+                }
+            }
+
+            s = 0;
+            foreach (int n in arr)
+            {
+                if (s < X)
+                {
+                    ans++;
+                }
+                s += n;
             }
 
             return ans;
