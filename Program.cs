@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.ComponentModel;
 using System.Runtime.InteropServices.Marshalling;
 using System.Runtime.Intrinsics.X86;
 using System.Text;
@@ -51,7 +52,7 @@ namespace Exercise1_Solution
 
 
             //LargestSubsequence largestSubsequence   = new LargestSubsequence();
-            //String s = "aquickbrownfoxjumpsoverthelazydog";
+            //String s = "gfdcbazyx";
             //Console.WriteLine(largestSubsequence.getLargest(s));
 
 
@@ -59,6 +60,11 @@ namespace Exercise1_Solution
             //String s = "))()()))(()";
             //Console.WriteLine(maximumBalances.solve(s));
 
+
+            DukeOnChessBoard dukeOnChessBoard = new DukeOnChessBoard();
+            int n = 4;
+            String initPosition = "d3";
+            Console.WriteLine(dukeOnChessBoard.dukePath(n, initPosition));
 
         }
     }
@@ -337,7 +343,154 @@ namespace Exercise1_Solution
     {
         public String dukePath(int n, String initPosition)
         {
-            return "";
+            bool[,] grid = new bool[n, n];
+            int i, j;
+            for(i = 0; i < n; i++)
+            {
+                for(j = 0; j < n; j++)
+                {
+                    grid[i, j] = false;
+                }
+            }            
+            
+            Dictionary<int, int> row = new Dictionary<int, int>();
+            for(i = 0; i < n; i++)
+            {
+                row[i] = (n - i);
+            }
+
+            Dictionary<int, char> col = new Dictionary<int, char>();
+            for(i = 0; i < n; i++)
+            {
+                col[i] = (char)(i + 97);
+            }
+
+            Queue<String> first = new Queue<String>();
+            Queue<String> last = new Queue<String>();
+            Queue<String> ans = new Queue<string>();
+
+            i = n - Int32.Parse(initPosition[1].ToString());
+            j = initPosition[0] - 'a';
+
+            grid[i, j] = true;
+            first.Enqueue(initPosition + "-");
+
+            // Main Part
+            dfs(i, j, n, first, last, grid, row, col);
+
+            bool isLarge = first.Count + last.Count == 14;
+            while (first.Count > 0)
+            {
+                string curr = first.Dequeue();
+                if (first.Count == 0 && isLarge)
+                {
+                    curr = curr.Substring(0, 2);
+                }
+                ans.Enqueue(curr);
+            }
+
+            if (last.Count == 7)
+            {
+                ans.Enqueue("...");
+            }
+            while (last.Count > 0)
+            {
+                string curr = last.Dequeue();
+                if(last.Count == 0)
+                {
+                    curr = curr.Substring(0, 2);
+                }
+                ans.Enqueue(curr);
+            }
+            return String.Join("", ans);
+        }
+
+        public void dfs(int i, int j,int n, Queue<String> first, Queue<String> last, bool[,] grid, Dictionary<int, int> row, Dictionary<int, char> col)
+        {
+            if(j + 1 < n && !grid[i, j + 1])
+            {
+                j++;
+                // Add To Queue
+                if (first.Count < 7)
+                {
+                    first.Enqueue(col[j] + "" + row[i].ToString() + "-");
+                }
+                else
+                {
+                    last.Enqueue(col[j] + "" + row[i].ToString() + "-");
+                    while (last.Count > 7)
+                    {
+                        last.Dequeue();
+                    }
+                }
+                grid[i, j] = true;
+            }
+
+            else if(i - 1 >= 0 && !grid[i - 1, j])
+            {
+                i--;
+                // Add To Queue
+                if (first.Count < 7)
+                {
+                    first.Enqueue(col[j] + "" + row[i].ToString() + "-");
+                }
+                else
+                {
+                    last.Enqueue(col[j] + "" + row[i].ToString() + "-");
+                    while (last.Count > 7)
+                    {
+                        last.Dequeue();
+                    }
+                }
+                grid[i, j] = true;
+            }
+
+            else if (i + 1 < n && !grid[i + 1, j])
+            {
+                //Console.WriteLine(i + " " + j);
+                i++;
+                // Add To Queue
+                if (first.Count < 7)
+                {
+                    first.Enqueue(col[j] + "" + row[i].ToString() + "-");
+                }
+                else
+                {
+                    last.Enqueue(col[j] + "" + row[i].ToString() + "-");
+                    while (last.Count > 7)
+                    {
+                        last.Dequeue();
+                    }
+                }
+                grid[i, j] = true;
+                dfs(i, j, n, first, last, grid, row, col);
+            }
+            
+            else if(j - 1 >= 0 && !grid[i, j - 1])
+            {
+                j--;
+                // Add To Queue
+                if (first.Count < 7)
+                {
+                    first.Enqueue(col[j] + "" + row[i].ToString() + "-");
+                }
+                else
+                {
+                    last.Enqueue(col[j] + "" + row[i].ToString() + "-");
+                    while (last.Count > 7)
+                    {
+                        last.Dequeue();
+                    }
+                }
+                grid[i, j] = true;
+            }
+            
+            else
+            {
+                return;
+            }
+           
+            dfs(i, j, n, first, last, grid, row, col);
         }
     }
     #endregion
