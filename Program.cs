@@ -98,7 +98,7 @@ namespace Exercise1_Solution
     }
 
     #region HuffmanDecoding Problem-1
-    class HuffmanDecoding
+    public class HuffmanDecoding
     {
         public String decode(String archive, string[] dictionary)
         {
@@ -140,7 +140,7 @@ namespace Exercise1_Solution
     #endregion
 
     #region LexmaxReplace Problem-2
-    class LexmaxReplace
+    public class LexmaxReplace
     {
         public String get(String s, String t)
         {
@@ -153,7 +153,7 @@ namespace Exercise1_Solution
             int i = 0, j = 0;
             while (i < s.Length && j < t.Length)
             {
-                if (s[i] > t[j])
+                if (s[i] >= t[j])
                 {
                     ans += s[i];
                     i++;
@@ -168,6 +168,7 @@ namespace Exercise1_Solution
             while (i < s.Length)
             {
                 ans += s[i];
+                i++;
             }
 
             return ans;
@@ -176,7 +177,7 @@ namespace Exercise1_Solution
     #endregion
 
     #region SortingSubsets Problem-3
-    class SortingSubsets
+    public class SortingSubsets
     {
         public int getMinimalSize(int[] a)
         {
@@ -198,7 +199,7 @@ namespace Exercise1_Solution
     #endregion
 
     #region PalindromeDecoding Problem-4
-    class PalindromeDecoding
+    public class PalindromeDecoding
     {
         public String decode(String code, int[] position, int[] length)
         {
@@ -228,7 +229,7 @@ namespace Exercise1_Solution
     #endregion
 
     #region MovingAvg Problem-5
-    class MovingAvg
+    public class MovingAvg
     {
         public double difference(int k, double[] data)
         {
@@ -258,7 +259,7 @@ namespace Exercise1_Solution
     #endregion
 
     #region WordCompositionGame Problem-6
-    class WordCompositionGame
+    public class WordCompositionGame
     {
         public String score(String[] listA, String[] listB, String[] listC)
         {
@@ -316,7 +317,7 @@ namespace Exercise1_Solution
     #endregion
 
     #region LargestSubsequence Problem-7
-    class LargestSubsequence
+    public class LargestSubsequence
     {
         public String getLargest(String s)
         {
@@ -346,7 +347,7 @@ namespace Exercise1_Solution
     #endregion
 
     #region MaximumBalances Problem-8
-    class MaximumBalances
+    public class MaximumBalances
     {
         public int solve(String s)
         {
@@ -369,7 +370,7 @@ namespace Exercise1_Solution
     #endregion
 
     #region DukeOnChessBoard Problem-9
-    class DukeOnChessBoard
+    public class DukeOnChessBoard
     {
         public String dukePath(int n, String initPosition)
         {
@@ -412,7 +413,7 @@ namespace Exercise1_Solution
             while (first.Count > 0)
             {
                 string curr = first.Dequeue();
-                if (first.Count == 0 && isLarge)
+                if (first.Count == 0 && (isLarge  || last.Count == 0))
                 {
                     curr = curr.Substring(0, 2);
                 }
@@ -526,7 +527,7 @@ namespace Exercise1_Solution
     #endregion
 
     #region Islands Problem-10
-    class Islands
+    public class Islands
     {
         public int beachLength(String[] kingdom)
         {
@@ -574,7 +575,7 @@ namespace Exercise1_Solution
     #endregion
 
     #region Mailbox Problem-11
-    class Mailbox
+    public class Mailbox
     {
         public int impossible(String collection, String[] address)
         {
@@ -620,7 +621,7 @@ namespace Exercise1_Solution
     #endregion
 
     #region MysticAndCandiesEasy Problem-12
-    class MysticAndCandiesEasy
+    public class MysticAndCandiesEasy
     {
         public int minBoxes(int C, int X, int[] high)
         {
@@ -656,7 +657,7 @@ namespace Exercise1_Solution
     #endregion
 
     #region PrintScheduler Problem-13
-    class PrintScheduler
+    public class PrintScheduler
     {
         public String getOutput(String[] threads, String[] slices)
         {
@@ -690,7 +691,7 @@ namespace Exercise1_Solution
     #endregion
 
     #region TurningLightOn Problem-14
-    class TurningLightOn
+    public class TurningLightOn
     {
         public void swapStates(int r, int c, String[] board)
         {
