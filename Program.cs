@@ -79,16 +79,21 @@ namespace Exercise1_Solution
 
 
             //MysticAndCandiesEasy mysticAndCandiesEasy = new MysticAndCandiesEasy();
-            //int C = 326;
-            //int X = 109;
-            //int[] high = {9, 13, 6, 6, 6, 16, 16, 16, 10, 16, 4, 3, 10, 8, 11, 17, 12, 5, 7,8, 7, 4, 15, 7, 14, 2, 2, 1, 17, 1, 7, 7, 12, 17, 2, 9, 7, 1, 8, 16,7, 4, 16, 2, 13, 3, 13, 1, 17, 6};
+            //int C = 100;
+            //int X = 1;
+            //int[] high = { 12, 23, 34, 34, 45 };
             //Console.WriteLine(mysticAndCandiesEasy.minBoxes(C, X, high));
 
 
-            PrintScheduler printScheduler = new PrintScheduler();
-            String[] threads = { "A" };
-            String[] slices = { "0 1" };
-            Console.WriteLine(printScheduler.getOutput(threads, slices));
+            //PrintScheduler printScheduler = new PrintScheduler();
+            //String[] threads = { "A" };
+            //String[] slices = { "0 1" };
+            //Console.WriteLine(printScheduler.getOutput(threads, slices));
+
+
+            TurningLightOn turningLightOn = new TurningLightOn();
+            String[] board = { "0101", "1010", "0101", "1010" };
+            Console.WriteLine(turningLightOn.minFlips(board));
         }
     }
 
@@ -676,6 +681,53 @@ namespace Exercise1_Solution
                     if (mapInd[ind] == threads[ind].Length)
                     {
                         mapInd[ind] = 0;
+                    }
+                }
+            }
+            return ans;
+        }
+    }
+    #endregion
+
+    #region TurningLightOn Problem-14
+    class TurningLightOn
+    {
+        public void swapStates(int r, int c, String[] board)
+        {
+            for(int i = 0; i <= r; i++)
+            {
+                char[] cur = board[i].ToCharArray();
+                for(int j = 0; j <= c; j++)
+                {
+                    if (cur[j] == '1') cur[j] = '0';
+                    else cur[j] = '1';
+                }
+                board[i] = String.Join("", cur);
+            }
+        }
+        public void printBoard(String[] board)
+        {
+            foreach (var s in board)
+            {
+                Console.WriteLine(s);
+            }
+            Console.WriteLine();
+        }
+        public int minFlips(String[] board)
+        {
+            int rows = board.Length;
+            int cols = board[0].Length;
+
+            int ans = 0;
+
+            for(int i = rows - 1; i >= 0; i--)
+            {
+                for(int j = board[i].Length - 1; j >= 0; j--)
+                {
+                    if (board[i][j] == '0')
+                    {
+                        swapStates(i, j, board);
+                        ans++;
                     }
                 }
             }
