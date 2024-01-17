@@ -6,37 +6,37 @@ namespace Exercise1_SolutionUnitTest
     public class LargestSubsequenceUnitTest
     {
         [TestMethod]
-        public void getLargest_TestCase0_ReturnsString()
+        public void GetLargest_TestCase0_ReturnsString()
         {
             LargestSubsequence largestSubsequence = new LargestSubsequence();
-            String results = largestSubsequence.getLargest("test");
+            String results = largestSubsequence.GetLargest("test");
             String ans = "tt";
             Assert.AreEqual(ans, results);
         }
 
         [TestMethod]
-        public void getLargest_TestCase1_ReturnsString()
+        public void GetLargest_TestCase1_ReturnsString()
         {
             LargestSubsequence largestSubsequence = new LargestSubsequence();
-            String results = largestSubsequence.getLargest("a");
+            String results = largestSubsequence.GetLargest("a");
             String ans = "a";
             Assert.AreEqual(ans, results);
         }
 
         [TestMethod]
-        public void getLargest_TestCase2_ReturnsString()
+        public void GetLargest_TestCase2_ReturnsString()
         {
             LargestSubsequence largestSubsequence = new LargestSubsequence();
-            String results = largestSubsequence.getLargest("example");
+            String results = largestSubsequence.GetLargest("example");
             String ans = "xple";
             Assert.AreEqual(ans, results);
         }
 
         [TestMethod]
-        public void getLargest_TestCase3_ReturnsString()
+        public void GetLargest_TestCase3_ReturnsString()
         {
             LargestSubsequence largestSubsequence = new LargestSubsequence();
-            String results = largestSubsequence.getLargest("aquickbrownfoxjumpsoverthelazydog");
+            String results = largestSubsequence.GetLargest("aquickbrownfoxjumpsoverthelazydog");
             String ans = "zyog";
             Assert.AreEqual(ans, results);
         }

@@ -13,7 +13,7 @@ namespace Exercise1_SolutionUnitTest
             HuffmanDecoding huffmanDecoding = new HuffmanDecoding();
             
             //Act
-            String results = huffmanDecoding.decode(archive, dictionary);
+            String results = huffmanDecoding.Decode(archive, dictionary);
 
             //Assert
             Assert.AreEqual(ans, results);
@@ -29,7 +29,7 @@ namespace Exercise1_SolutionUnitTest
             HuffmanDecoding huffmanDecoding = new HuffmanDecoding();
 
             //Act
-            String results = huffmanDecoding.decode(archive, dictionary);
+            String results = huffmanDecoding.Decode(archive, dictionary);
 
             //Assert
             Assert.AreEqual(ans, results);
@@ -45,7 +45,7 @@ namespace Exercise1_SolutionUnitTest
             HuffmanDecoding huffmanDecoding = new HuffmanDecoding();
 
             //Act
-            String results = huffmanDecoding.decode(archive, dictionary);
+            String results = huffmanDecoding.Decode(archive, dictionary);
 
             //Assert
             Assert.AreEqual(ans, results);
@@ -61,7 +61,7 @@ namespace Exercise1_SolutionUnitTest
             HuffmanDecoding huffmanDecoding = new HuffmanDecoding();
 
             //Act
-            String results = huffmanDecoding.decode(archive, dictionary);
+            String results = huffmanDecoding.Decode(archive, dictionary);
 
             //Assert
             Assert.AreEqual(ans, results);
@@ -77,7 +77,7 @@ namespace Exercise1_SolutionUnitTest
             HuffmanDecoding huffmanDecoding = new HuffmanDecoding();
 
             //Act
-            String results = huffmanDecoding.decode(archive, dictionary);
+            String results = huffmanDecoding.Decode(archive, dictionary);
 
             //Assert
             Assert.AreEqual(ans, results);
