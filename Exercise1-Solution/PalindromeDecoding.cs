@@ -10,7 +10,7 @@ namespace Exercise1_Solution
     {
         private StringBuilder MakePalindrome(StringBuilder s, int position, int length)
         {
-            var palindrome = new StringBuilder("");
+            var palindrome = new StringBuilder();
             for (int i = position; i < position + length; i++)
             {
                 palindrome.Append(s[i]);
@@ -30,15 +30,15 @@ namespace Exercise1_Solution
 
         public String Decode(String code, int[] position, int[] length)
         {
-            StringBuilder ans = new StringBuilder(code);
+            StringBuilder decodedString = new StringBuilder(code);
 
             for (int i = 0; i < position.Length; i++)
             {
-                StringBuilder palindrome = MakePalindrome(ans, position[i], length[i]);
+                StringBuilder palindrome = MakePalindrome(decodedString, position[i], length[i]);
                 ReversePalindrome(palindrome);
-                ans.Insert(position[i] + length[i], palindrome.ToString());
+                decodedString.Insert(position[i] + length[i], palindrome.ToString());
             }
-            return ans.ToString();
+            return decodedString.ToString();
         }
     }
 }

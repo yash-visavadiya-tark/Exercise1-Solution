@@ -8,7 +8,7 @@ namespace Exercise1_Solution
 {
     public class LexmaxReplace
     {
-        private String SortStringInDescending(String t)
+        private String SortInDescendingOrder(String t)
         {
             char[] arr = t.ToCharArray();
             Array.Sort(arr, new Comparison<char>((c1, c2) => c2.CompareTo(c1)));
@@ -17,25 +17,25 @@ namespace Exercise1_Solution
 
         public String Get(String s, String t)
         {
-            t = SortStringInDescending(t);
+            t = SortInDescendingOrder(t);
 
-            StringBuilder ans = new StringBuilder("");
-            int i = 0, j = 0;
-            while (i < s.Length && j < t.Length)
+            StringBuilder ans = new StringBuilder();
+            int sIndex = 0, tIndex = 0;
+            while (sIndex < s.Length && tIndex < t.Length)
             {
-                if (s[i] >= t[j])
+                if (s[sIndex] >= t[tIndex])
                 {
-                    ans.Append(s[i]);
-                    i++;
+                    ans.Append(s[sIndex]);
+                    sIndex++;
                 }
                 else
                 {
-                    ans.Append(t[j]);
-                    i++;
-                    j++;
+                    ans.Append(t[tIndex]);
+                    sIndex++;
+                    tIndex++;
                 }
             }
-            ans.Append(s.Substring(i));
+            ans.Append(s.Substring(sIndex));
 
             return ans.ToString();
         }

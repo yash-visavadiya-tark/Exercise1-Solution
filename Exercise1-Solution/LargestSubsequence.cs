@@ -10,24 +10,23 @@ namespace Exercise1_Solution
     {
         public String GetLargest(String s)
         {
-            var largestString = new StringBuilder("");
-            int n = s.Length;
-            Stack<char> st = new Stack<char>();
+            var largestString = new StringBuilder();
+            Stack<char> stack = new Stack<char>();
 
-            int i = 0;
-            while (i < n)
+            int index = 0;
+            while (index < s.Length)
             {
-                while (st.Count > 0 && st.Peek().CompareTo(s[i]) < 0)
+                while (stack.Count > 0 && stack.Peek().CompareTo(s[index]) < 0)
                 {
-                    st.Pop();
+                    stack.Pop();
                 }
-                st.Push(s[i]);
-                i++;
+                stack.Push(s[index]);
+                index++;
             }
 
-            while (st.Count > 0)
+            while (stack.Count > 0)
             {
-                largestString.Append(st.Pop());
+                largestString.Append(stack.Pop());
             }
 
             return new String(largestString.ToString().Reverse().ToArray());

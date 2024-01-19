@@ -27,16 +27,16 @@ namespace Exercise1_Solution
 
         private int PickBoxGreedily(int minTarget, int[] arr)
         {
-            int ans = 0, sum = 0;
+            int numberOfBoxs = 0, sum = 0;
             foreach (int n in arr)
             {
                 if (sum < minTarget)
                 {
-                    ans++;
+                    numberOfBoxs++;
                 }
                 sum += n;
             }
-            return ans;
+            return numberOfBoxs;
         }
      
         public int MinBoxes(int C, int X, int[] high)

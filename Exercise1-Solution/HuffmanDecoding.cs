@@ -8,35 +8,39 @@ namespace Exercise1_Solution
 {
     public class HuffmanDecoding
     {
-        private Dictionary<String, char> MapDictionaryToString(String[] dictionary)
+        private Dictionary<String, char> MapDictionaryStringToChar(String[] dictionary)
         {
             var map = new Dictionary<String, char>();
-            int i = 0;
 
-            foreach (String word in dictionary)
+            for (int i = 0; i < dictionary.Length; i++)
             {
-                map[word] = (char)(i++ + 65);
+                map[dictionary[i]] = (char)(i + 65);
             }
-
             return map;
+        }
+
+        private String DecodeHuffmanString(String archive, Dictionary<String, char> mapDictionary)
+        {
+            StringBuilder decodedString = new StringBuilder();
+            StringBuilder decodeChar = new StringBuilder();
+
+            foreach (char ch in archive)
+            {
+                decodeChar.Append(ch);
+                if (mapDictionary.ContainsKey(decodeChar.ToString()))
+                {
+                    decodedString.Append(mapDictionary[decodeChar.ToString()]);
+                    decodeChar.Clear();
+                }
+            }
+            return decodedString.ToString();
         }
 
         public String Decode(String archive, String[] dictionary)
         {
-            var map = MapDictionaryToString(dictionary);
-            var decodedString = new StringBuilder();
+            Dictionary<String, char> mapDictionary = MapDictionaryStringToChar(dictionary);
 
-            String word = "";
-            foreach (char ch in archive)
-            {
-                word += ch;
-                if (map.ContainsKey(word))
-                {
-                    decodedString.Append(map[word]);
-                    word = "";
-                }
-            }
-            return decodedString.ToString();
+            return DecodeHuffmanString(archive, mapDictionary);
         }
     }
 }

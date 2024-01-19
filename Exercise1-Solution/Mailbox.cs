@@ -10,18 +10,18 @@ namespace Exercise1_Solution
     {
         private Dictionary<char, int> CountMap(String s, char ignore = ' ')
         {
-            Dictionary<char, int> count = new Dictionary<char, int>();
+            Dictionary<char, int> frequency = new Dictionary<char, int>();
 
             foreach (char ch in s)
             {
                 if (ch == ignore)
                     continue;
-                if (count.Keys.Contains(ch))
-                    count[ch]++;
+                if (frequency.Keys.Contains(ch))
+                    frequency[ch]++;
                 else
-                    count[ch] = 1;
+                    frequency[ch] = 1;
             }
-            return count;
+            return frequency;
         }
 
         private bool CheckIfPossible(Dictionary<char, int> current, Dictionary<char, int> collection)

@@ -127,9 +127,11 @@ namespace Exercise1_Solution
             #endregion
 
             #region TurningLightOn Problem-14
+
             TurningLightOn turningLightOn = new TurningLightOn();
             String[] board = { "0101", "1010", "0101", "1010" };
             Console.WriteLine(turningLightOn.MinFlips(board));
+
             #endregion
         }
     }

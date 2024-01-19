@@ -10,7 +10,7 @@ namespace Exercise1_Solution
     {
         private int CalculateScoreForSinglePlayer(String[] currentPlayerScore, String[] Player1Score, String[] Player2Score)
         {
-            int ans = 0;
+            int score = 0;
 
             for (int i = 0; i < currentPlayerScore.Length; i++)
             {
@@ -23,9 +23,9 @@ namespace Exercise1_Solution
                 {
                     cnt--;
                 }
-                ans += cnt;
+                score += cnt;
             }
-            return ans;
+            return score;
         }
 
         public String Score(String[] listA, String[] listB, String[] listC)
