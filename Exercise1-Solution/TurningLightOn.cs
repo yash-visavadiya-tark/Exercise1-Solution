@@ -42,46 +42,50 @@ namespace Exercise1_Solution
             int rows = board.Length;
             int cols = board[0].Length;
 
-            int[] dp = new int[cols];
+            int[] colOperations = new int[cols];
+            char[] changedRow = new char[cols];
+            
+            InitializeDP(board[rows - 1], colOperations);
 
-            InitializeDP(board[rows - 1], dp);
-
-            for (int i = rows - 2; i >= 0; i--)
+            int i = rows - 2;
+            while ( i >= 0)
             {
-                int j = board[i].Length - 1;
-                int cost = 0;
-                int newCost = 0;
-
+                int j = cols - 1;
+                int additionalOperationInRow = 0;
                 while (j >= 0)
                 {
-                    if (board[i][j] == '0')
+                    changedRow[j] = board[i][j];
+                    int currentOperation = colOperations[j] + additionalOperationInRow; 
+                    if (currentOperation % 2 == 1)
                     {
-                        cost++;
+                        if (changedRow[j] == '1')
+                            changedRow[j] = '0';
+                        else
+                            changedRow[j] = '1';
+                    }
 
-                        newCost += Math.Abs(dp[j] + newCost - cost) % 2;
-
-                        while (j >= 0 && board[i][j] == '0')
-                        {
-                            dp[j] = dp[j] + newCost;
-                            j--;
-                        }
+                    if (changedRow[j] == '1')
+                    {
+                        colOperations[j] = colOperations[j] + additionalOperationInRow;
                     }
                     else
                     {
-                        if (j + 1 < cols && board[i][j + 1] == '0')
-                            cost++;
-
-                        newCost += Math.Abs(dp[j] + newCost - cost) % 2;
-
-                        while (j >= 0 && board[i][j] == '1')
-                        {
-                            dp[j] = dp[j] + newCost;
-                            j--;
-                        }
+                        additionalOperationInRow++;
+                        colOperations[j] = colOperations[j] + additionalOperationInRow;
                     }
+                    j--;
                 }
+                i--;
             }
-            return dp[0];
+            return colOperations[0];
+        }
+
+        private void print1D(int[] arr) {
+            foreach (int k in arr)
+            {
+                Console.Write(k + " ");
+            }
+            Console.WriteLine();
         }
     }
 }
