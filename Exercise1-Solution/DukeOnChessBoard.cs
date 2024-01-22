@@ -8,41 +8,7 @@ namespace Exercise1_Solution
 {
     public class DukeOnChessBoard
     {
-        private bool[,] InitializeGrid(int n, bool value)
-        {
-            bool[,] grid = new bool[n, n];
-            int i, j;
-            for (i = 0; i < n; i++)
-            {
-                for (j = 0; j < n; j++)
-                {
-                    grid[i, j] = value;
-                }
-            }
-            return grid;
-        }
-
-        private Dictionary<int, int> MapRows(int n)
-        {
-            Dictionary<int, int> rows = new Dictionary<int, int>();
-            for (int i = 0; i < n; i++)
-            {
-                rows[i] = (n - i);
-            }
-            return rows;
-        }
-
-        private Dictionary<int, char> MapCols(int n)
-        {
-            Dictionary<int, char> cols = new Dictionary<int, char>();
-            for (int i = 0; i < n; i++)
-            {
-                cols[i] = (char)(i + 97);
-            }
-            return cols;
-        }
-
-        private Queue<String> BuildFirst(Queue<String> first,Queue<String> last)
+        private Queue<String> BuildFirst(Queue<String> first, Queue<String> last)
         {
             var ans = new Queue<string>();
             bool isLarge = first.Count + last.Count == 14;
@@ -76,7 +42,7 @@ namespace Exercise1_Solution
                 ans.Enqueue(curr);
             }
         }
-        
+
         private String ModifyAnswer(Queue<String> first, Queue<String> last)
         {
             var ans = BuildFirst(first, last);
@@ -87,30 +53,34 @@ namespace Exercise1_Solution
 
         public String DukePath(int n, String initPosition)
         {
-            int i, j;
-            bool[,] grid = InitializeGrid(n, value: false);
-            Dictionary<int, int> row = MapRows(n);
-            Dictionary<int, char> col = MapCols(n);
+            List<List<bool>> grid = Enumerable.Range(0, n).
+                                    Select(row => Enumerable.Range(0, n).
+                                        Select(col => false).ToList()).ToList();
+
+            Dictionary<int, int> row = Enumerable.Range(0, n).
+                                        ToDictionary(Key => Key, value => n - value);
+
+            int asciiValue = 97;
+            Dictionary<int, char> col = Enumerable.Range(0, n).
+                                        ToDictionary(key => key, value => (char)(value + asciiValue));
 
             Queue<String> first = new Queue<String>();
             Queue<String> last = new Queue<String>();
-            
-            // Initialization
-            i = n - int.Parse(initPosition[1].ToString());
-            j = initPosition[0] - 'a';
 
-            grid[i, j] = true;
+            int i = n - int.Parse(initPosition[1].ToString());
+            int j = initPosition[0] - 'a';
+
+            grid[i][j] = true;
             first.Enqueue(initPosition + "-");
 
-            // Main Part
             Dfs(i, j, n, first, last, grid, row, col);
 
             return ModifyAnswer(first, last);
         }
 
-        public void Dfs(int i, int j, int n, Queue<String> first, Queue<String> last, bool[,] grid, Dictionary<int, int> row, Dictionary<int, char> col)
+        public void Dfs(int i, int j, int n, Queue<String> first, Queue<String> last, List<List<bool>> grid, Dictionary<int, int> row, Dictionary<int, char> col)
         {
-            if (j + 1 < n && !grid[i, j + 1])
+            if (j + 1 < n && !grid[i][j + 1])
             {
                 j++;
                 // Add To Queue
@@ -126,10 +96,10 @@ namespace Exercise1_Solution
                         last.Dequeue();
                     }
                 }
-                grid[i, j] = true;
+                grid[i][j] = true;
             }
 
-            else if (i - 1 >= 0 && !grid[i - 1, j])
+            else if (i - 1 >= 0 && !grid[i - 1][j])
             {
                 i--;
                 // Add To Queue
@@ -145,10 +115,10 @@ namespace Exercise1_Solution
                         last.Dequeue();
                     }
                 }
-                grid[i, j] = true;
+                grid[i][j] = true;
             }
 
-            else if (i + 1 < n && !grid[i + 1, j])
+            else if (i + 1 < n && !grid[i + 1][j])
             {
                 i++;
                 // Add To Queue
@@ -164,11 +134,11 @@ namespace Exercise1_Solution
                         last.Dequeue();
                     }
                 }
-                grid[i, j] = true;
+                grid[i][j] = true;
                 Dfs(i, j, n, first, last, grid, row, col);
             }
 
-            else if (j - 1 >= 0 && !grid[i, j - 1])
+            else if (j - 1 >= 0 && !grid[i][j - 1])
             {
                 j--;
                 // Add To Queue
@@ -184,7 +154,7 @@ namespace Exercise1_Solution
                         last.Dequeue();
                     }
                 }
-                grid[i, j] = true;
+                grid[i][j] = true;
             }
 
             else

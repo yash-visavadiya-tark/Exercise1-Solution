@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,42 +9,23 @@ namespace Exercise1_Solution
 {
     public class Mailbox
     {
-        private Dictionary<char, int> CountMap(String s, char ignore = ' ')
-        {
-            Dictionary<char, int> frequency = new Dictionary<char, int>();
-
-            foreach (char ch in s)
-            {
-                if (ch == ignore)
-                    continue;
-                if (frequency.Keys.Contains(ch))
-                    frequency[ch]++;
-                else
-                    frequency[ch] = 1;
-            }
-            return frequency;
-        }
-
         private bool CheckIfPossible(Dictionary<char, int> current, Dictionary<char, int> collection)
         {
-            foreach (char ch in current.Keys)
-            {
-                if (!(collection.ContainsKey(ch) && collection[ch] >= current[ch]))
-                {
-                    return false;
-                }
-            }
-            return true;
+            int availableCharacters = current.Keys.Where(x => collection.ContainsKey(x) && collection[x] >= current[x]).Count();
+            return  availableCharacters == current.Keys.Count();
         }
 
         public int Impossible(String collection, String[] address)
         {
-            int ans = 0;
-            Dictionary<char, int> collectionCount = CountMap(collection);
+            Dictionary<char, int> collectionCount = collection.GroupBy(x => x).
+                                                                ToDictionary(g => g.Key, g => g.Count());
 
+            int ans = 0;
             foreach (String s in address)
             {
-                Dictionary<char, int> currentCount = CountMap(s);
+                Dictionary<char, int> currentCount = s.GroupBy(x => x).
+                                                        Where(x => x.Key != ' ').
+                                                        ToDictionary(g => g.Key, g => g.Count());
 
                 if(!CheckIfPossible(currentCount, collectionCount)){
                     ans++;

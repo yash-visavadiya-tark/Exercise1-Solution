@@ -8,17 +8,6 @@ namespace Exercise1_Solution
 {
     public class HuffmanDecoding
     {
-        private Dictionary<String, char> MapDictionaryStringToChar(String[] dictionary)
-        {
-            var map = new Dictionary<String, char>();
-
-            for (int i = 0; i < dictionary.Length; i++)
-            {
-                map[dictionary[i]] = (char)(i + 65);
-            }
-            return map;
-        }
-
         private String DecodeHuffmanString(String archive, Dictionary<String, char> mapDictionary)
         {
             StringBuilder decodedString = new StringBuilder();
@@ -38,7 +27,8 @@ namespace Exercise1_Solution
 
         public String Decode(String archive, String[] dictionary)
         {
-            Dictionary<String, char> mapDictionary = MapDictionaryStringToChar(dictionary);
+            int asciiValue = 65;
+            Dictionary<String, char> mapDictionary = dictionary.ToDictionary(key => key, value => (char)(asciiValue++)); ;
 
             return DecodeHuffmanString(archive, mapDictionary);
         }

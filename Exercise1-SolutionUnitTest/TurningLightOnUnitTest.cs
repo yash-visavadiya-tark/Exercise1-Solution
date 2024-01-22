@@ -38,5 +38,14 @@
             int ans = 7;
             Assert.AreEqual(ans, results);
         }
+
+        [TestMethod]
+        public void MinFlips_TestCase4_ReturnsInt()
+        {
+            TurningLightOn turningLightOn = new TurningLightOn();
+            int results = turningLightOn.MinFlips(new string[] { "1111", "1010", "1111", "1010" });
+            int ans = 16;
+            Assert.AreEqual(ans, results);
+        }
     }
 }

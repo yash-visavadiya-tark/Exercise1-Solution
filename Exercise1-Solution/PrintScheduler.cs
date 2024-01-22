@@ -9,18 +9,6 @@ namespace Exercise1_Solution
 {
     public class PrintScheduler
     {
-        private Dictionary<int,int> InitializeAllThreadIndex(int n)
-        {
-            Dictionary<int, int> mapInd = new Dictionary<int, int>();
-
-            for (int i = 0; i < n; i++)
-            {
-                mapInd[i] = 0;
-            }
-
-            return mapInd;
-        }
-
         private String RunThreadsAndReturnResult(String[] threads, String[] slices, Dictionary<int, int> threadIndex)
         {
             var ans = new StringBuilder("");
@@ -47,7 +35,8 @@ namespace Exercise1_Solution
 
         public String GetOutput(String[] threads, String[] slices)
         {
-            Dictionary<int, int> threadIndex = InitializeAllThreadIndex(threads.Length);
+            int index = 0;
+            Dictionary<int, int> threadIndex = threads.ToDictionary(key => index++, value => 0);
 
             return RunThreadsAndReturnResult(threads, slices, threadIndex);
         }

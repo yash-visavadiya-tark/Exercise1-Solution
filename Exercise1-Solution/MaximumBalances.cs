@@ -11,16 +11,21 @@ namespace Exercise1_Solution
         public int Solve(String s)
         {
             int ans = 0;
-            int openingBracketCount = 0;
-            int closingBracketCount = 0;
+            int openingBracketCount = (from ch in s
+                                      where ch == '('
+                                      select ch).Count();
 
-            foreach (char c in s)
-            {
-                if (c == '(')
-                    openingBracketCount++;
-                else
-                    closingBracketCount++;
-            }
+            int closingBracketCount = (from ch in s
+                                       where ch == ')'
+                                       select ch).Count();
+
+            //foreach (char c in s)
+            //{
+            //    if (c == '(')
+            //        openingBracketCount++;
+            //    else
+            //        closingBracketCount++;
+            //}
 
             ans = Math.Min(openingBracketCount, closingBracketCount);
             return ans * (ans + 1) / 2;
